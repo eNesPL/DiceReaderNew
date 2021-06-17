@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from collections import deque
 
+from sklearn import cluster
 
 
 def readDice():
@@ -24,9 +25,7 @@ def readDice():
     display = deque([ 0, 0 ], maxlen=10)
     while True:
         ret, frame = cap.read()
-        frame = cv2.Canny(frame, 30, 255)
         blobs = detector.detect(frame)
-
         reading = len(blobs)
         print(f"TEST:{reading}")
 
@@ -37,6 +36,7 @@ def readDice():
             if readings[ -1 ] == readings[ -2 ] == readings[ -3 ]:
                 display.append(readings[ -1 ])
 
+            print(display)
             if display[ -1 ] != display[ -2 ] and display[ -1 ] != 0:
                 msg = f"{display[ -1 ]}\n****"
                 print(msg)

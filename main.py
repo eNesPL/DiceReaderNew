@@ -2,7 +2,8 @@ from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QLabel
 
 import DiceReader as dr
-
+import threading
+from Server import Server
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
@@ -29,10 +30,6 @@ class Ui_MainWindow(object):
         self.Button_DiceRead.clicked.connect(self.ReadDice)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        self.statuslabel = QLabel()
-        self.statuslabel.setGeometry(QtCore.QRect(590, 80, 181, 91))
-        self.statuslabel.text = "Test"
-        self.statuslabel.show()
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -44,6 +41,7 @@ class Ui_MainWindow(object):
         v = dr.readDice()
         self.lcdNumber.display(v)
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -51,4 +49,8 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
+    s = Server()
+    threading.Thread(target = s.Start).start()
+    threading.Thread(target = s.Broadcast).start()
     sys.exit(app.exec_())
+
