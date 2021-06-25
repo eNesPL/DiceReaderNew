@@ -5,7 +5,8 @@ import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PiUi import *
 from Server import *
-
+from DiceReader import *
+from configparser import ConfigParser
 
 if __name__ == "__main__":
     import sys
@@ -18,6 +19,8 @@ if __name__ == "__main__":
     s = Server()
     threading.Thread(target = s.Start).start()
     threading.Thread(target = s.Broadcast).start()
-    ui.stackedWidget.setCurrentIndex(2)
+    DRGetUI(ui)
+    GenerateCameras()
+    ui.stackedWidget.setCurrentIndex(5)
     sys.exit(app.exec_())
 

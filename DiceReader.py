@@ -1,11 +1,36 @@
 import cv2
 import numpy as np
 from collections import deque
-
+import PiUi as ui
 from sklearn import cluster
 
+global gui
+def DRGetUI(ggui):
+    global gui
+    gui=ggui
 
-def readDice():
+def returnCameraIndexes():
+    # checks the first 10 indexes.
+    index = 0
+    arr = []
+    i = 10
+    while i > 0:
+        cap = cv2.VideoCapture(index)
+        if cap.read()[0]:
+            arr.append(index)
+            cap.release()
+        index += 1
+        i -= 1
+    return arr
+
+def GenerateCameras():
+    i = returnCameraIndexes()
+    print(i)
+    for j in i:
+        gui.AddCamera(str(j))
+    gui.AddCamera("Remote Camera")
+
+def readDice(cam):
     # parametry detektora
     params = cv2.SimpleBlobDetector_Params()  # declare filter parameters.
     params.filterByArea = True
@@ -16,7 +41,7 @@ def readDice():
     params.minArea = 100
     params.minCircularity = 0.3
     params.minInertiaRatio = 0.5
-    cap = cv2.VideoCapture("http://192.168.0.209:8080/video")
+    cap = cv2.VideoCapture(cam)
     cap.set(15, -4)  # '15' references video's exposure. '-4' sets it.
     detector = cv2.SimpleBlobDetector_create(params)  # create a blob detector object.
 
