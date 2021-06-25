@@ -2,6 +2,8 @@ import socket
 import threading
 from DiceReader import readDice
 from time import sleep
+from PiUi import Ui_MainWindow as ui
+
 
 class Server:
     connected = False
@@ -20,11 +22,12 @@ class Server:
 
     def Connection_Tester(self,c):
         try:
-            c.send("Test".encode())
+            c.send("?".encode())
         except:
             self.connected=False
             threading.Thread(target=self.Broadcast).start()
             return False
+
 
     def Start(self):
         print("Server Started")
@@ -50,7 +53,14 @@ class Server:
                                 c.send((str(readDice()).encode()))
                             except:
                                 c.send(b'0')
+                        if(data==b'JustTestMe'):
+                            self.Send_Command(c,"Music",99)
                 except:
                     self.connected = False
                     threading.Thread(target=self.Broadcast).start()
                     break
+
+
+    def Send_Command(self,c,cmd,val):
+        c.send(str(cmd+":"+str(val)).encode())
+

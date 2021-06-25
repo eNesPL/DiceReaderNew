@@ -24,6 +24,7 @@ def readDice():
     readings = deque([ 0, 0 ], maxlen=10)  # lists are used to track the number of pips.
     display = deque([ 0, 0 ], maxlen=10)
     while True:
+        cleared=False
         ret, frame = cap.read()
         blobs = detector.detect(frame)
         reading = len(blobs)
@@ -32,15 +33,17 @@ def readDice():
         if counter % 10 == 0:
             reading = len(blobs)
             readings.append(reading)
+            if(reading != 0):
+                cleared=True
 
-            if readings[ -1 ] == readings[ -2 ] == readings[ -3 ]:
-                display.append(readings[ -1 ])
-
-            print(display)
-            if display[ -1 ] != display[ -2 ] and display[ -1 ] != 0:
-                msg = f"{display[ -1 ]}\n****"
-                print(msg)
-                return display[ -1 ]
+            if(cleared):
+                if readings[ -1 ] == readings[ -2 ] == readings[ -3 ]:
+                    display.append(readings[ -1 ])
+                print(display)
+                if display[ -1 ] != display[ -2 ] and display[ -1 ] != 0:
+                    msg = f"{display[ -1 ]}\n****"
+                    print(msg)
+                    return display[ -1 ]
 
         counter += 1
 
