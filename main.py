@@ -6,8 +6,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PiUi import *
 from Server import *
 from DiceReader import *
-from configparser import ConfigParser
+import os
 
+def Close():
+    os._exit(0)
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -22,5 +24,6 @@ if __name__ == "__main__":
     DRGetUI(ui)
     GenerateCameras()
     ui.stackedWidget.setCurrentIndex(5)
+    app.lastWindowClosed.connect(Close)
     sys.exit(app.exec_())
 

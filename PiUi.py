@@ -126,8 +126,6 @@ class Ui_MainWindow(object):
         self.stackedWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-    def closeEvent(self, event):
-        print("tet")
 
     def AddCamera(self,name):
         self.newRadioButton = QtWidgets.QRadioButton(self.scrollAreaWidgetContents)
