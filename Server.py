@@ -2,11 +2,13 @@ import socket
 import threading
 from DiceReader import readDice
 from time import sleep
-from PiUi import Ui_MainWindow as ui
 
 
 class Server:
     connected = False
+    s=socket.socket()
+    c=''
+
     def Broadcast(self):
         interfaces = socket.getaddrinfo(host=socket.gethostname(), port=None, family=socket.AF_INET)
         allips = [ ip[ -1 ][ 0 ] for ip in interfaces ]
@@ -28,6 +30,11 @@ class Server:
             threading.Thread(target=self.Broadcast).start()
             return False
 
+    def Update_Connection(self,connection):
+        self.c = connection
+
+    def NewGame(self):
+        self.Send_Command(self.c,"NewGame",0)
 
     def Start(self):
         print("Server Started")
@@ -40,6 +47,7 @@ class Server:
             c, addr = s.accept()
             self.connected=True
             print("connected")
+            self.Update_Connection(c)
             while True:
                 if(self.Connection_Tester(c)==False):
                     break

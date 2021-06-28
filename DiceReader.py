@@ -1,12 +1,12 @@
 import cv2
 import numpy as np
 from collections import deque
-import PiUi as ui
+#import PiUi as ui
 from sklearn import cluster
-
-global gui
+from Logic import Ui_Logic as gui
+#global gui
 def DRGetUI(ggui):
-    global gui
+    #global gui
     gui=ggui
 
 def returnCameraIndexes():
@@ -22,13 +22,6 @@ def returnCameraIndexes():
         index += 1
         i -= 1
     return arr
-
-def GenerateCameras():
-    i = returnCameraIndexes()
-    print(i)
-    for j in i:
-        gui.AddCamera(str(j))
-    gui.AddCamera("Remote Camera")
 
 def readDice(cam):
     # parametry detektora

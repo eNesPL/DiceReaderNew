@@ -49,7 +49,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>5</number>
     </property>
     <widget class="QWidget" name="page_3">
      <widget class="QLabel" name="label">
@@ -265,22 +265,7 @@
          <height>109</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QRadioButton" name="radioButton">
-          <property name="text">
-           <string>RadioButton</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="radioButton_2">
-          <property name="text">
-           <string>RadioButton</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
+       <layout class="QVBoxLayout" name="verticalLayout_2"/>
       </widget>
      </widget>
      <widget class="QTextEdit" name="textEdit">
@@ -306,7 +291,7 @@
        <string>Remote Camera addres</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_3">
+     <widget class="QPushButton" name="SaveButton">
       <property name="geometry">
        <rect>
         <x>310</x>
@@ -316,7 +301,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Save</string>
       </property>
      </widget>
     </widget>
