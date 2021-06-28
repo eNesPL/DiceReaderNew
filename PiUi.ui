@@ -268,13 +268,13 @@
        <layout class="QVBoxLayout" name="verticalLayout_2"/>
       </widget>
      </widget>
-     <widget class="QTextEdit" name="textEdit">
+     <widget class="QTextEdit" name="RemoteCameraAddress">
       <property name="geometry">
        <rect>
         <x>230</x>
         <y>180</y>
         <width>221</width>
-        <height>31</height>
+        <height>51</height>
        </rect>
       </property>
      </widget>
@@ -288,7 +288,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>Remote Camera addres</string>
+       <string>Remote Camera address</string>
       </property>
      </widget>
      <widget class="QPushButton" name="SaveButton">

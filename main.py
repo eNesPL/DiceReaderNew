@@ -8,9 +8,13 @@ from Logic import Ui_Logic
 from Server import *
 from DiceReader import *
 import os
-from Config import save
+from Config import SaveConfig,getui
+global ui
+
 def Close():
     os._exit(0)
+
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
@@ -18,10 +22,10 @@ if __name__ == "__main__":
     ui = Ui_Logic()
     ui.stackedWidget.setCurrentIndex(1)
     s = Server()
+    getui(ui)
     threading.Thread(target = s.Start).start()
     threading.Thread(target = s.Broadcast).start()
     ui.GenerateCameras()
-    save()
     ui.stackedWidget.setCurrentIndex(5)
     app.lastWindowClosed.connect(Close)
     sys.exit(app.exec_())

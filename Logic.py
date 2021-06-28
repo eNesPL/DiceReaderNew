@@ -12,6 +12,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets, uic
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QMainWindow
 import DiceReader as DR
+from Config import *
+
 
 class Ui_Logic(QMainWindow):
     CamRadioButtons = []
@@ -19,10 +21,7 @@ class Ui_Logic(QMainWindow):
         super(Ui_Logic, self).__init__()
         uic.loadUi('PiUi.ui', self)
         self.show()
-        self.SaveButton.clicked.connect(self.button_pressed)
-
-    def button_pressed(self):
-        print("Dupa")
+        self.SaveButton.clicked.connect(SaveConfig)
 
     def GenerateCameras(self):
         i = DR.returnCameraIndexes()
@@ -38,4 +37,8 @@ class Ui_Logic(QMainWindow):
         _translate = QtCore.QCoreApplication.translate
         self.newRadioButton.setText(_translate("MainWindow", name))
         self.CamRadioButtons.append(self.newRadioButton)
+
+
+    def GetCameraAddress(self):
+        return self.RemoteCameraAddress.toPlainText()
 

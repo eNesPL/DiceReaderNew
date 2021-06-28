@@ -4,10 +4,6 @@ from collections import deque
 #import PiUi as ui
 from sklearn import cluster
 from Logic import Ui_Logic as gui
-#global gui
-def DRGetUI(ggui):
-    #global gui
-    gui=ggui
 
 def returnCameraIndexes():
     # checks the first 10 indexes.
