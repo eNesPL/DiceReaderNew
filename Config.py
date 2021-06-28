@@ -32,6 +32,9 @@ def SaveConfig():
             config.set("Camera","CameraID",i.text().replace(" ","_"))
             if(i.text() == "Remote Camera"):
                 config.set("Camera","RemoteCamera",ui.GetCameraAddress())
+    (Music,Effect) = ui.GetSliderValues()
+    config.set("Sound","Music",str(Music))
+    config.set("Sound","Effects",str(Effect))
     with open('config.ini','w') as configfile:
         config.write(configfile)
 

@@ -173,7 +173,7 @@
      </layout>
     </widget>
     <widget class="QWidget" name="page_2">
-     <widget class="QSlider" name="horizontalSlider">
+     <widget class="QSlider" name="MusicSlider">
       <property name="geometry">
        <rect>
         <x>60</x>
@@ -189,7 +189,7 @@
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
-     <widget class="QSlider" name="horizontalSlider_2">
+     <widget class="QSlider" name="EffectSlider">
       <property name="geometry">
        <rect>
         <x>60</x>

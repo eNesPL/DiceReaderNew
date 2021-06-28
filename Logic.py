@@ -38,6 +38,9 @@ class Ui_Logic(QMainWindow):
         self.newRadioButton.setText(_translate("MainWindow", name))
         self.CamRadioButtons.append(self.newRadioButton)
 
+    def GetSliderValues(self):
+        print(self.MusicSlider.value())
+        return self.MusicSlider.value(), self.EffectSlider.value()
 
     def GetCameraAddress(self):
         return self.RemoteCameraAddress.toPlainText()

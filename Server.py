@@ -22,7 +22,7 @@ class Server:
                 sock.close()
             sleep(2)
 
-    def Connection_Tester(self,c):
+    def ConnectionTester(self, c):
         try:
             c.send("?".encode())
         except:
@@ -30,11 +30,11 @@ class Server:
             threading.Thread(target=self.Broadcast).start()
             return False
 
-    def Update_Connection(self,connection):
+    def UpdateConnection(self, connection):
         self.c = connection
 
     def NewGame(self):
-        self.Send_Command(self.c,"NewGame",0)
+        self.SendCommand(self.c, "NewGame", 0)
 
     def Start(self):
         print("Server Started")
@@ -47,9 +47,9 @@ class Server:
             c, addr = s.accept()
             self.connected=True
             print("connected")
-            self.Update_Connection(c)
+            self.UpdateConnection(c)
             while True:
-                if(self.Connection_Tester(c)==False):
+                if(self.ConnectionTester(c)==False):
                     break
                 try:
                     data = c.recv(1024)
@@ -62,13 +62,16 @@ class Server:
                             except:
                                 c.send(b'0')
                         if(data==b'JustTestMe'):
-                            self.Send_Command(c,"Music",99)
+                            self.SendCommand(c, "Music", 99)
                 except:
                     self.connected = False
                     threading.Thread(target=self.Broadcast).start()
                     break
 
 
-    def Send_Command(self,c,cmd,val):
+    #def SendConfig(self):
+     #   self.SendCommand(c, )
+
+    def SendCommand(self, c, cmd, val):
         c.send(str(cmd+":"+str(val)).encode())
 
