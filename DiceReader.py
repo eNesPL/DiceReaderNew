@@ -31,6 +31,7 @@ def readDice():
 
 def readDiceWithCam(cam):
     # parametry detektora
+    print(cam)
     params = cv2.SimpleBlobDetector_Params()  # declare filter parameters.
     params.filterByArea = True
     params.filterByCircularity = True

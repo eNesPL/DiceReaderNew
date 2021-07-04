@@ -25,7 +25,7 @@ class Config():
 
 global ui
 
-def getui(d):
+def configGetUi(d):
     global ui
     ui = d
 

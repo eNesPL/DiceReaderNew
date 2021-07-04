@@ -54,3 +54,7 @@ class Ui_Logic(QMainWindow):
     def GetCameraAddress(self):
         return self.RemoteCameraAddress.toPlainText()
 
+    def on_get(self, req, resp):
+        resp.status = falcon.HTTP_200
+        resp.text = "TE"
+

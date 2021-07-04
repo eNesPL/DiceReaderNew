@@ -5,10 +5,10 @@ import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from Logic import Ui_Logic
-from old_Server import *
+from RestApiServer import RestApiGetUi, RestApiServer, AddRoutes
 from DiceReader import *
 import os
-from Config import SaveConfig,LoadConfig,getui
+from Config import SaveConfig,LoadConfig,configGetUi
 global ui
 
 
@@ -21,11 +21,11 @@ if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_Logic()
-    s = Server()
-    getui(ui)
+    configGetUi(ui)
+    RestApiGetUi(ui)
+    AddRoutes()
     ui.stackedWidget.setCurrentIndex(1)
-    threading.Thread(target = s.Start).start()
-    threading.Thread(target = s.Broadcast).start()
+    threading.Thread(target = RestApiServer).start()
     ui.GenerateCameras()
     LoadConfig()
     ui.stackedWidget.setCurrentIndex(5)
