@@ -2,6 +2,8 @@ import cv2
 import numpy as np
 from sklearn import cluster
 
+from Config import config
+
 params = cv2.SimpleBlobDetector_Params()
 
 detector = cv2.SimpleBlobDetector_create(params)
@@ -66,7 +68,7 @@ def most_frequent(List):
     return max(set(List), key = List.count)
 
 def readDice():
-    cap = cv2.VideoCapture("http://192.168.0.209:8080/video")
+    cap = cv2.VideoCapture(config.RemoteCamera)
     list_dice_roll = [ ]
     print("Start")
     diceR=0

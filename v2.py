@@ -13,7 +13,7 @@ params.maxThreshold = 200
 params.minArea = 100
 params.minCircularity = 0.3
 params.minInertiaRatio = 0.5
-cap = cv2.VideoCapture("http://192.168.0.209:8080/video")
+cap = cv2.VideoCapture("http://192.168.0.150:8080/video")
 cap.set(15, -4)  # '15' references video's exposure. '-4' sets it.
 detector = cv2.SimpleBlobDetector_create(params)  # create a blob detector object.
 

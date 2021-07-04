@@ -28,7 +28,7 @@ class Ui_Logic(QMainWindow):
         print(i)
         for j in i:
             self.AddCamera(str(j))
-        self.AddCamera("Remote Camera")
+        self.AddCamera("Remote_Camera")
 
     def AddCamera(self,name):
         self.newRadioButton = QtWidgets.QRadioButton(self.scrollAreaWidgetContents)
@@ -41,6 +41,15 @@ class Ui_Logic(QMainWindow):
     def GetSliderValues(self):
         print(self.MusicSlider.value())
         return self.MusicSlider.value(), self.EffectSlider.value()
+
+    def LoadConfig(self,config):
+        self.MusicSlider.setValue(int(config.Music))
+        self.EffectSlider.setValue(int(config.Effects))
+        for i in Ui_Logic.CamRadioButtons:
+            if i.text() == config.Camera:
+                i.setChecked(True)
+        self.RemoteCameraAddress.setPlainText(config.RemoteCamera)
+        self.ConfirmRollsCheckBox.setCheckState(int(config.ConfirmRoll))
 
     def GetCameraAddress(self):
         return self.RemoteCameraAddress.toPlainText()

@@ -3,7 +3,9 @@ import numpy as np
 from collections import deque
 #import PiUi as ui
 from sklearn import cluster
-from Logic import Ui_Logic as gui
+
+from Config import Config
+
 
 def returnCameraIndexes():
     # checks the first 10 indexes.
@@ -19,7 +21,15 @@ def returnCameraIndexes():
         i -= 1
     return arr
 
-def readDice(cam):
+def readDice():
+
+    if(Config.Camera!="Remote_Camera"):
+        return readDiceWithCam(Config.Camera)
+    else:
+        return readDiceWithCam(Config.RemoteCamera)
+
+
+def readDiceWithCam(cam):
     # parametry detektora
     params = cv2.SimpleBlobDetector_Params()  # declare filter parameters.
     params.filterByArea = True
