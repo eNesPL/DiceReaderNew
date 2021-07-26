@@ -22,6 +22,7 @@ class Ui_Logic(QMainWindow):
         uic.loadUi('PiUi.ui', self)
         self.show()
         self.SaveButton.clicked.connect(SaveConfig)
+        self.SettingsButton.clicked.connect(self.RunConfig)
 
     def GenerateCameras(self):
         i = DR.returnCameraIndexes()
@@ -54,7 +55,7 @@ class Ui_Logic(QMainWindow):
     def GetCameraAddress(self):
         return self.RemoteCameraAddress.toPlainText()
 
-    def on_get(self, req, resp):
-        resp.status = falcon.HTTP_200
-        resp.text = "TE"
-
+    def RunConfig(self):
+        self.ChangeIndex(5)
+    def ChangeIndex(self,index):
+        self.stackedWidget.setCurrentIndex(int(index))

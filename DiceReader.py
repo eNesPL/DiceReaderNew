@@ -4,7 +4,8 @@ from collections import deque
 #import PiUi as ui
 from sklearn import cluster
 
-from Config import Config
+import Config
+from Config import config
 
 
 def returnCameraIndexes():
@@ -22,11 +23,12 @@ def returnCameraIndexes():
     return arr
 
 def readDice():
-
-    if(Config.Camera!="Remote_Camera"):
-        return readDiceWithCam(Config.Camera)
+    print(config.Camera)
+    if(config.Camera!="Remote_Camera"):
+        return readDiceWithCam(config.Camera)
     else:
-        return readDiceWithCam(Config.RemoteCamera)
+        print(config.RemoteCamera)
+        return readDiceWithCam(config.RemoteCamera)
 
 
 def readDiceWithCam(cam):
@@ -36,9 +38,9 @@ def readDiceWithCam(cam):
     params.filterByArea = True
     params.filterByCircularity = True
     params.filterByInertia = True
-    params.minThreshold = 10
+    params.minThreshold = 5
     params.maxThreshold = 200
-    params.minArea = 100
+    params.minArea = 20
     params.minCircularity = 0.3
     params.minInertiaRatio = 0.5
     cap = cv2.VideoCapture(cam)
@@ -51,11 +53,11 @@ def readDiceWithCam(cam):
     while True:
         cleared=False
         ret, frame = cap.read()
+
         blobs = detector.detect(frame)
         reading = len(blobs)
         print(f"TEST:{reading}")
-
-        if counter % 10 == 0:
+        if counter % 5 == 0:
             reading = len(blobs)
             readings.append(reading)
             if(reading != 0):
@@ -64,12 +66,10 @@ def readDiceWithCam(cam):
             if(cleared):
                 if readings[ -1 ] == readings[ -2 ] == readings[ -3 ]:
                     display.append(readings[ -1 ])
-                print(display)
-                if display[ -1 ] != display[ -2 ] and display[ -1 ] != 0:
+                if display[ -1 ] == display[ -2 ] and display[ -1 ] != 0:
                     msg = f"{display[ -1 ]}\n****"
                     print(msg)
                     return display[ -1 ]
 
         counter += 1
 
-##

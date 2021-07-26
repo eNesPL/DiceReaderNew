@@ -1,98 +1,46 @@
 import cv2
 import numpy as np
+from collections import deque
+
 from sklearn import cluster
 
-from Config import config
-
-params = cv2.SimpleBlobDetector_Params()
-
-detector = cv2.SimpleBlobDetector_create(params)
-class v:
-    Value = 240
-
-def get_dice_from_blobs(blobs):
-    X = []
-    for b in blobs:
-        pos = b.pt
-        if pos != None:
-            X.append(pos)
-
-    X = np.asarray(X)
-
-    if len(X) > 0:
-
-        clustering = cluster.DBSCAN(eps=90, min_samples=0).fit(X)
-        num_dice = max(clustering.labels_) + 1
-        dice = []
-        for i in range(num_dice):
-            X_dice = X[clustering.labels_ == i]
-            centroid_dice = np.mean(X_dice, axis=0)
-            dice.append([len(X_dice), *centroid_dice])
-
-        return dice
-
-    else:
-        return []
-
-
-def overlay_info(frame, dice, blobs):
-
-    for b in blobs:
-        pos = b.pt
-        r = b.size / 2
-
-        cv2.circle(frame, (int(pos[0]), int(pos[1])),
-                   int(r), (255, 0, 0), 2)
-
-
-    for d in dice:
-
-        textsize = cv2.getTextSize(
-            str(d[0]), cv2.FONT_HERSHEY_PLAIN, 3, 2)[0]
-
-        cv2.putText(frame, str(d[0]),
-                    (int(d[1] - textsize[0] / 2),
-                     int(d[2] + textsize[1] / 2)),
-                    cv2.FONT_HERSHEY_PLAIN, 3, (0, 255, 0), 2)
-
-def threshold(img_in, value):
-    img_out = img_in.copy()
-    map, img_out = cv2.threshold(img_out, value, 255, cv2.THRESH_BINARY)
-    return img_out
-
-def onChange(value):
-    v.Value = value
-
-
-def most_frequent(List):
-    return max(set(List), key = List.count)
 
 def readDice():
-    cap = cv2.VideoCapture(config.RemoteCamera)
-    list_dice_roll = [ ]
-    print("Start")
-    diceR=0
-    for i in range(0,10):
+    # parametry detektora
+    params = cv2.SimpleBlobDetector_Params()  # declare filter parameters.
+    params.filterByArea = True
+    params.filterByCircularity = True
+    params.filterByInertia = True
+    params.minThreshold = 5
+    params.maxThreshold = 200
+    params.minArea = 20
+    params.minCircularity = 0.3
+    params.minInertiaRatio = 0.5
+    cap = cv2.VideoCapture("http://192.168.0.209:8080/video")
+    cap.set(15, -4)  # '15' references video's exposure. '-4' sets it.
+    detector = cv2.SimpleBlobDetector_create(params)  # create a blob detector object.
+
+    counter = 0  # script will use a counter to handle FPS.
+    readings = deque([0, 0], maxlen=10)  # lists are used to track the number of pips.
+    display = deque([0, 0], maxlen=10)
+    while True:
         ret, frame = cap.read()
-        sum = 0
-        frame_blurred = cv2.GaussianBlur(frame, (5, 5), 0)
-        frame_gray = cv2.cvtColor(frame_blurred, cv2.COLOR_BGR2GRAY)
-        frame_t = threshold(frame_gray, 187)
-        blobs = detector.detect(frame_t)
-        dice = get_dice_from_blobs(blobs)
+        blobs = detector.detect(frame)
+        reading = len(blobs)
+        print(f"TEST:{reading}")
+        if counter % 10 == 0:
+            reading = len(blobs)
+            readings.append(reading)
 
+            if readings[-1] == readings[-2] == readings[-3]:
+                display.append(readings[-1])
 
-        for num in dice:
-            sum=sum+num[0]
+            print(display)
+            if display[-1] == display[-2] and display[-1] != 0:
+                msg = f"{display[-1]}\n****"
+                print(msg)
+                return display[-1]
 
-        list_dice_roll.append(sum)
-        avr = 0
-        for i in list_dice_roll:
-            avr = avr + i
-    diceavr =int(avr/len(list_dice_roll))
-    dicepop = most_frequent(list_dice_roll)
-    print(dicepop)
-    print(diceavr)
-    print("Stop")
-    cap.release()
-    return diceR
+        counter += 1
+
+print(readDice())
