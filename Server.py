@@ -49,24 +49,24 @@ class Server:
         s.listen(1)
         print("is waiting")
         while(self.connected == False):
-            c, addr = s.accept()
+            self.c, addr = s.accept()
             self.connected=True
             self.ui.ChangeIndex(3)
             print("connected")
-            self.UpdateConnection(c)
+            self.UpdateConnection(self.c)
             while True:
                 try:
-                    data = c.recv(1024)
+                    data = self.c.recv(1024)
                     if data:
                         print(data)
                         if(data==b'GiveMeDice'):
                             print("SENDING")
                             try:
-                                c.send((str(readDice()).encode()))
+                                self.c.send((str(readDice()).encode()))
                             except:
-                                c.send(b'0')
+                                self.c.send(b'0')
                         if(data==b'JustTestMe'):
-                            self.SendCommand(c, "Music", 99)
+                            self.SendCommand(self.c, "Music", 99)
                 except:
                     self.connected = False
                     threading.Thread(target=self.Broadcast).start()
@@ -76,6 +76,9 @@ class Server:
     #def SendConfig(self):
      #   self.SendCommand(c, )
 
-    def SendCommand(self, c, cmd, val):
-        c.send(str(cmd+":"+str(val)).encode())
+    def SendCommand(self, cmd, val):
+        self.c.send(str(cmd+":"+str(val)).encode())
+
+    def SendJson(self,json):
+        self.c.send(str(json).encode())
 

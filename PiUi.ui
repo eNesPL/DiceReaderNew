@@ -26,19 +26,6 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QLabel" name="StatusLabel">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>300</y>
-      <width>462</width>
-      <height>13</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Status: </string>
-    </property>
-   </widget>
    <widget class="QStackedWidget" name="stackedWidget">
     <property name="geometry">
      <rect>
@@ -49,7 +36,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="page_3">
      <widget class="QLabel" name="label">
@@ -67,16 +54,6 @@
      </widget>
     </widget>
     <widget class="QWidget" name="page">
-     <widget class="QGraphicsView" name="graphicsView">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>451</width>
-        <height>251</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
@@ -103,8 +80,74 @@
        <string>Cancel</string>
       </property>
      </widget>
+     <widget class="QSpinBox" name="spinBox">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>100</y>
+        <width>91</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="minimum">
+       <number>1</number>
+      </property>
+      <property name="maximum">
+       <number>6</number>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>170</x>
+        <y>40</y>
+        <width>101</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>20</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Dice roll</string>
+      </property>
+     </widget>
     </widget>
-    <widget class="QWidget" name="page_6"/>
+    <widget class="QWidget" name="page_6">
+     <widget class="QPushButton" name="pushButton_2">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>70</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Move Pawn</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_3">
+      <property name="geometry">
+       <rect>
+        <x>160</x>
+        <y>140</y>
+        <width>151</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Move new Pawn on board</string>
+      </property>
+     </widget>
+    </widget>
     <widget class="QWidget" name="page_4">
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -164,7 +207,7 @@
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="StartButton">
         <property name="text">
          <string>Start Game</string>
         </property>
@@ -173,43 +216,11 @@
      </layout>
     </widget>
     <widget class="QWidget" name="page_2">
-     <widget class="QSlider" name="MusicSlider">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>40</y>
-        <width>381</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="value">
-       <number>99</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-     <widget class="QSlider" name="EffectSlider">
-      <property name="geometry">
-       <rect>
-        <x>60</x>
-        <y>80</y>
-        <width>381</width>
-        <height>22</height>
-       </rect>
-      </property>
-      <property name="value">
-       <number>99</number>
-      </property>
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
      <widget class="QCheckBox" name="ConfirmRollsCheckBox">
       <property name="geometry">
        <rect>
-        <x>360</x>
-        <y>130</y>
+        <x>340</x>
+        <y>20</y>
         <width>81</width>
         <height>17</height>
        </rect>
@@ -218,39 +229,13 @@
        <string>Confirm rolls</string>
       </property>
      </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>1</x>
-        <y>80</y>
-        <width>47</width>
-        <height>13</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Effects</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>40</y>
-        <width>47</width>
-        <height>13</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Music</string>
-      </property>
-     </widget>
      <widget class="QScrollArea" name="scrollArea">
       <property name="geometry">
        <rect>
-        <x>0</x>
-        <y>150</y>
+        <x>10</x>
+        <y>20</y>
         <width>221</width>
-        <height>111</height>
+        <height>131</height>
        </rect>
       </property>
       <property name="widgetResizable">
@@ -262,7 +247,7 @@
          <x>0</x>
          <y>0</y>
          <width>219</width>
-         <height>109</height>
+         <height>129</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2"/>
@@ -271,7 +256,7 @@
      <widget class="QTextEdit" name="RemoteCameraAddress">
       <property name="geometry">
        <rect>
-        <x>230</x>
+        <x>10</x>
         <y>180</y>
         <width>221</width>
         <height>51</height>
@@ -281,7 +266,7 @@
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>240</x>
+        <x>10</x>
         <y>160</y>
         <width>121</width>
         <height>16</height>
@@ -303,6 +288,48 @@
       <property name="text">
        <string>Save</string>
       </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_7">
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>441</width>
+        <height>281</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QPushButton" name="pushButton_8">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_6">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_7">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="pushButton_5">
+         <property name="text">
+          <string>PushButton</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </widget>
    </widget>

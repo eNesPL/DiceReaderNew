@@ -6,7 +6,7 @@ import DiceReader as dr
 import threading
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-from Logic import  Ui_Logic
+
 from DiceReader import *
 import os
 from Config import SaveConfig,LoadConfig,configGetUi
@@ -18,14 +18,15 @@ global ui
 def Close():
     os._exit(0)
 
-
 if __name__ == "__main__":
+    from Logic import  Ui_Logic
     import sys
     app = QtWidgets.QApplication(sys.argv)
     MainWindow = QtWidgets.QMainWindow()
     ui = Ui_Logic()
     configGetUi(ui)
     s = Server(ui)
+    ui.getServer(s)
     threading.Thread(target=s.Start).start()
     threading.Thread(target=s.Broadcast).start()
     ui.stackedWidget.setCurrentIndex(0)

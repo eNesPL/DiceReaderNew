@@ -17,12 +17,28 @@ from Config import *
 
 class Ui_Logic(QMainWindow):
     CamRadioButtons = []
+    Players = 1
     def __init__(self):
         super(Ui_Logic, self).__init__()
         uic.loadUi('PiUi.ui', self)
         self.show()
         self.SaveButton.clicked.connect(SaveConfig)
         self.SettingsButton.clicked.connect(self.RunConfig)
+        self.NewGameButton.clicked.connect(self.PlayerSelection)
+        self.ContinueButton.clicked.connect(self.ContiuneGameClick)
+        self.PlusPlayerButton.clicked.connect(self.PlusPlayer)
+        self.MinusPlayerButton.clicked.connect(self.MinusPlayer)
+        self.StartButton.clicked.connect(self.NewGameClick)
+
+    def PlusPlayer(self):
+        if(self.Players!=4):
+            self.Players = self.Players+1
+        self.PlayerNumberSelectLCD.display(self.Players)
+    def MinusPlayer(self):
+        if (self.Players != 1):
+            self.Players = self.Players - 1
+        self.PlayerNumberSelectLCD.display(self.Players)
+
 
     def GenerateCameras(self):
         i = DR.returnCameraIndexes()
@@ -44,8 +60,6 @@ class Ui_Logic(QMainWindow):
         return self.MusicSlider.value(), self.EffectSlider.value()
 
     def LoadConfig(self,config):
-        self.MusicSlider.setValue(int(config.Music))
-        self.EffectSlider.setValue(int(config.Effects))
         for i in Ui_Logic.CamRadioButtons:
             if i.text() == config.Camera:
                 i.setChecked(True)
@@ -59,3 +73,15 @@ class Ui_Logic(QMainWindow):
         self.ChangeIndex(5)
     def ChangeIndex(self,index):
         self.stackedWidget.setCurrentIndex(int(index))
+
+    def PlayerSelection(self):
+        self.ChangeIndex(4)
+
+    def NewGameClick(self):
+        self.server.SendJson("{'Type':'New','Players':'"+str(self.Players)+"'}")
+
+    def ContiuneGameClick(self):
+        self.server.SendJson("{'Type':'Continue'}")
+
+    def getServer(self,s):
+        self.server = s

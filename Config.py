@@ -27,11 +27,8 @@ def configGetUi(d):
 
 
 def GenerateConfig():
-    configparser.add_section("Sound")
     configparser.add_section("Camera")
     configparser.add_section("Game")
-    configparser.set("Sound", 'music', str(100))
-    configparser.set("Sound", 'effects', str(100))
     configparser.set("Camera", "cameraid", str(""))
     configparser.set("Camera", "remotecamera", str(""))
     configparser.set("Game", 'confirmroll', str(0))
@@ -46,8 +43,6 @@ def SaveConfig():
             configparser.set("Camera", "cameraid", i.text().replace(" ", "_"))
     configparser.set("Camera", "remotecamera", ui.GetCameraAddress())
     (Music, Effect) = ui.GetSliderValues()
-    configparser.set("Sound", "music", str(Music))
-    configparser.set("Sound", "effects", str(Effect))
     configparser.set("Game", "confirmroll", str(ui.ConfirmRollsCheckBox.checkState()))
     with open('config.ini', 'w') as configfile:
         configparser.write(configfile)
@@ -58,8 +53,6 @@ def LoadConfig():
     if (CheckConfig()):
         GenerateConfig()
     configparser.read('config.ini')
-    config.Music = configparser.get("Sound", "music")
-    config.Effects = configparser.get("Sound", "effects")
     config.Camera = configparser.get("Camera", "cameraid")
     config.RemoteCamera = configparser.get("Camera", "remotecamera")
     config.ConfirmRoll = configparser.get("Game", "confirmroll")
