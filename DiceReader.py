@@ -1,3 +1,6 @@
+import random
+from time import sleep
+
 import cv2
 import numpy as np
 from collections import deque
@@ -30,8 +33,9 @@ def readDice():
         print(config.RemoteCamera)
         return readDiceWithCam(config.RemoteCamera)
 
-
 def readDiceWithCam(cam):
+    return 6
+def readDiceWithCam2(cam):
     # parametry detektora
     print(cam)
     params = cv2.SimpleBlobDetector_Params()  # declare filter parameters.

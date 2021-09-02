@@ -42,7 +42,6 @@ def SaveConfig():
         if (i.isChecked()):
             configparser.set("Camera", "cameraid", i.text().replace(" ", "_"))
     configparser.set("Camera", "remotecamera", ui.GetCameraAddress())
-    (Music, Effect) = ui.GetSliderValues()
     configparser.set("Game", "confirmroll", str(ui.ConfirmRollsCheckBox.checkState()))
     with open('config.ini', 'w') as configfile:
         configparser.write(configfile)

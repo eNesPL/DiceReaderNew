@@ -28,7 +28,7 @@ class Server:
 
     def ConnectionTester(self, c):
         try:
-            #c.send("".encode())
+            c.send("test".encode())
             print("just test")
         except:
             self.connected=False
@@ -58,16 +58,9 @@ class Server:
                 try:
                     data = self.c.recv(1024)
                     if data:
-                        print(data)
-                        if(data==b'GiveMeDice'):
-                            print("SENDING")
-                            try:
-                                self.c.send((str(readDice()).encode()))
-                            except:
-                                self.c.send(b'0')
-                        if(data==b'JustTestMe'):
-                            self.SendCommand(self.c, "Music", 99)
-                except:
+                        threading.Thread(target=self.HandleData(data)).start()
+                except Exception as e:
+                    print(e)
                     self.connected = False
                     threading.Thread(target=self.Broadcast).start()
                     break
@@ -82,3 +75,22 @@ class Server:
     def SendJson(self,json):
         self.c.send(str(json).encode())
 
+    def HandleData(self,data):
+        print(data)
+        if (data == b'GiveMeDice'):
+            print("SENDING")
+            try:
+                self.c.send((str(readDice()).encode()))
+            except:
+                self.c.send(b'0')
+        if (data == b'SpawnOrMove'):
+            self.ui.SpawnOrMove()
+        if (data == b'TakeDice'):
+            self.ui.TakeDiceConfirm()
+        if ("MoveQuestion" in data.decode("utf-8")):
+            print("I'tsheere")
+            self.ui.GenerateMoveButtons(data.decode("utf-8"))
+        if (data == b'RollDiceMSG'):
+            self.ui.SetRollDice()
+        if (data == b"MovingPawn"):
+            self.ui.SetMovingPawn()
