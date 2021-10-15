@@ -88,6 +88,7 @@ class Ui_Logic(QMainWindow):
 
     def ContiuneGameClick(self):
         self.server.SendJson("{'Type':'Continue'}")
+        self.ChangeIndex(7)
 
     def getServer(self,s):
         self.server = s

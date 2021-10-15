@@ -85,12 +85,16 @@ class Server:
                 self.c.send(b'0')
         if (data == b'SpawnOrMove'):
             self.ui.SpawnOrMove()
-        if (data == b'TakeDice'):
-            self.ui.TakeDiceConfirm()
-        if ("MoveQuestion" in data.decode("utf-8")):
-            print("I'tsheere")
-            self.ui.GenerateMoveButtons(data.decode("utf-8"))
-        if (data == b'RollDiceMSG'):
-            self.ui.SetRollDice()
-        if (data == b"MovingPawn"):
-            self.ui.SetMovingPawn()
+        else:
+            if (data == b'TakeDice'):
+                self.ui.TakeDiceConfirm()
+            else:
+                if (data == b'RollDiceMSG'):
+                    self.ui.SetRollDice()
+                else:
+                    if ("MoveQuestion" in data.decode("utf-8")):
+                        print("I'tsheere")
+                        self.ui.GenerateMoveButtons(data.decode("utf-8"))
+                    else:
+                        if (data == b"MovingPawn"):
+                            self.ui.SetMovingPawn()
