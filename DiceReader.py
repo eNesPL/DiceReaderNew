@@ -3,7 +3,6 @@ from time import sleep
 
 import cv2
 import numpy as np
-from collections import deque
 #import PiUi as ui
 from sklearn import cluster
 

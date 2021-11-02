@@ -1,8 +1,6 @@
 import os
 from configparser import ConfigParser
 
-import falcon
-
 configparser = ConfigParser()
 
 
