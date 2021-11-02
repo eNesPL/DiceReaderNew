@@ -45,15 +45,3 @@ def readDice():
         else:
             print(a)
 
-
-import socket
-import psutil
-def linux(family):
-    for interface, snics in psutil.net_if_addrs().items():
-        for snic in snics:
-            if snic.family == family:
-                yield snic.address
-
-
-ipv4s = list(linux(socket.AF_INET))
-print(ipv4s)

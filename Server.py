@@ -1,6 +1,9 @@
 import os
 import socket
 import threading
+
+import psutil
+
 from DiceReader import readDice
 from time import sleep
 import netifaces as ni
@@ -12,28 +15,32 @@ class Server:
     s=socket.socket()
     c=''
 
+
     def __init__(self,ui):
         self.ui = ui
     def Broadcast(self):
-        if(os.name=='nt'):
-            self.windows()
-    def windows(self):
-        interfaces = socket.getaddrinfo(host=socket.gethostname(), port=None, family=socket.AF_INET)
-        allips = [ ip[ -1 ][ 0 ] for ip in interfaces ]
+        allips = self.getips()
         while not self.connected:
             for ip in allips:
-                print(f'sending on {ip}')
-                sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
-                sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
-                sock.bind((ip, 0))
-                sock.sendto("ILikeCake".encode(), ("255.255.255.255", 112))
-                sock.close()
-            sleep(2)
-    def linux(self):
-        interfaces = ni.interfaces()
-        allips = []
-        for interface in interfaces:
-            allips.append(ni.ifaddresses(interface)[ni.AF_INET][0]['addr'])
+                try:
+                    print(f'sending on {ip}')
+                    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
+                    sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+                    sock.bind((ip, 0))
+                    sock.sendto("ILikeCake".encode(), ("255.255.255.255", 112))
+                    sock.close()
+                    sleep(2)
+                except Exception as e:
+                    print(e)
+
+    def getIps_Handler(self):
+        for interface, snics in psutil.net_if_addrs().items():
+            for snic in snics:
+                if snic.family == socket.AF_INET:
+                    yield snic.address
+    def getips(self):
+        ipv4s = list(self.getIps_Handler())
+        return ipv4s
 
     def ConnectionTester(self, c):
         try:
