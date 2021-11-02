@@ -28,9 +28,9 @@ class Server:
                     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
                     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
                     sock.bind((ip, 0))
-                    sock.sendto("ILikeCake".encode(), ("255.255.255.255", 112))
+                    sock.sendto("ILikeCake".encode(), ("255.255.255.255", 62423))
                     sock.close()
-                    sleep(2)
+                    sleep(0.5)
                 except Exception as e:
                     print(e)
 
@@ -61,7 +61,7 @@ class Server:
     def Start(self):
         print("Server Started")
         s = socket.socket()
-        port = 111
+        port = 62422
         s.bind(('', port))
         s.listen(1)
         print("is waiting")
