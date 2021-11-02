@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 from collections import deque
-
+import json
 from sklearn import cluster
 readings = [0,0,0]
 def allTheSame(items):
@@ -45,4 +45,15 @@ def readDice():
         else:
             print(a)
 
-print(readDice())
+
+import socket
+import psutil
+def linux(family):
+    for interface, snics in psutil.net_if_addrs().items():
+        for snic in snics:
+            if snic.family == family:
+                yield snic.address
+
+
+ipv4s = list(linux(socket.AF_INET))
+print(ipv4s)

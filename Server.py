@@ -1,8 +1,9 @@
+import os
 import socket
 import threading
 from DiceReader import readDice
 from time import sleep
-
+import netifaces as ni
 
 
 
@@ -14,6 +15,9 @@ class Server:
     def __init__(self,ui):
         self.ui = ui
     def Broadcast(self):
+        if(os.name=='nt'):
+            self.windows()
+    def windows(self):
         interfaces = socket.getaddrinfo(host=socket.gethostname(), port=None, family=socket.AF_INET)
         allips = [ ip[ -1 ][ 0 ] for ip in interfaces ]
         while not self.connected:
@@ -25,6 +29,11 @@ class Server:
                 sock.sendto("ILikeCake".encode(), ("255.255.255.255", 112))
                 sock.close()
             sleep(2)
+    def linux(self):
+        interfaces = ni.interfaces()
+        allips = []
+        for interface in interfaces:
+            allips.append(ni.ifaddresses(interface)[ni.AF_INET][0]['addr'])
 
     def ConnectionTester(self, c):
         try:
