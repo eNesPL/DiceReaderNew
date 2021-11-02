@@ -44,9 +44,9 @@ def readDice():
         print(config.RemoteCamera)
         return readDiceWithCam(config.RemoteCamera)
 
-def readDiceWithCam(cam):
-    return 6
 def readDiceWithCam2(cam):
+    return 6
+def readDiceWithCam(cam):
     params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.filterByCircularity = True
@@ -56,7 +56,7 @@ def readDiceWithCam2(cam):
     params.minArea = 100
     params.minCircularity = 0.5
     params.minInertiaRatio = 0.5
-    cap = cv2.VideoCapture("http://192.168.0.209:8080/video")
+    cap = cv2.VideoCapture(cam)
     detector = cv2.SimpleBlobDetector_create(params)
     while True:
         ret, frame = cap.read()
