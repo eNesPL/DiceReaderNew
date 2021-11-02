@@ -21,6 +21,7 @@ class Server:
     def Broadcast(self):
         allips = self.getips()
         while not self.connected:
+            print(self.connected)
             for ip in allips:
                 try:
                     print(f'sending on {ip}')
@@ -64,8 +65,11 @@ class Server:
         s.bind(('', port))
         s.listen(1)
         print("is waiting")
+        print(self.connected)
         while(self.connected == False):
+            print(self.connected)
             self.c, addr = s.accept()
+            print(self.connected)
             self.connected=True
             self.ui.ChangeIndex(3)
             print("connected")
