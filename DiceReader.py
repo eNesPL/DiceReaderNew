@@ -24,7 +24,19 @@ def returnCameraIndexes():
         index += 1
         i -= 1
     return arr
+readings = [0,0,0]
+def allTheSame(items):
 
+    if(items.__contains__(0)):
+        return False
+    return all(x == items[0] for x in items)
+def addReadings(value):
+    readings.pop()
+    readings.insert(0,value)
+    if(allTheSame(readings)):
+        return readings[0]
+    else:
+        return 0
 def readDice():
     print(config.Camera)
     if(config.Camera!="Remote_Camera"):
@@ -36,51 +48,31 @@ def readDice():
 def readDiceWithCam(cam):
     return 6
 def readDiceWithCam2(cam):
-    # parametry detektora
-    print(cam)
-    params = cv2.SimpleBlobDetector_Params()  # declare filter parameters.
+    params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.filterByCircularity = True
     params.filterByInertia = True
-    params.minThreshold = 5
+    params.minThreshold = 100
     params.maxThreshold = 200
-    params.minArea = 20
-    params.minCircularity = 0.3
+    params.minArea = 100
+    params.minCircularity = 0.5
     params.minInertiaRatio = 0.5
-    cap = cv2.VideoCapture(cam)
-    cap.set(15, -4)  # '15' references video's exposure. '-4' sets it.
-    detector = cv2.SimpleBlobDetector_create(params)  # create a blob detector object.
-
-    counter = 0  # script will use a counter to handle FPS.
-    readings = deque([ 0, 0 ], maxlen=10)  # lists are used to track the number of pips.
-    display = deque([ 0, 0 ], maxlen=10)
+    cap = cv2.VideoCapture("http://192.168.0.209:8080/video")
+    detector = cv2.SimpleBlobDetector_create(params)
     while True:
-        cleared=False
         ret, frame = cap.read()
-        #--
-        imgray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-        contours, hierarchy = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-        cv2.imshow("TE",imgray)
-        imgg = cv2.drawContours(imgray, contours, -1, (0, 255, 0), 3)
-        cv2.imshow("TE2", imgg)
-        #--
-        blobs = detector.detect(frame)
+        # --
+        frame_blurred = cv2.medianBlur(frame, 9)
+        imgray = cv2.cvtColor(frame_blurred, cv2.COLOR_BGR2GRAY)
+        th, im_gray = cv2.threshold(imgray, 128, 192, cv2.THRESH_OTSU)
+        # --
+        blobs = detector.detect(im_gray)
         reading = len(blobs)
         print(f"TEST:{reading}")
-        if counter % 5 == 0:
-            reading = len(blobs)
-            readings.append(reading)
-            if(reading != 0):
-                cleared=True
-
-            if(cleared):
-                if readings[ -1 ] == readings[ -2 ] == readings[ -3 ]:
-                    display.append(readings[ -1 ])
-                if display[ -1 ] == display[ -2 ] and display[ -1 ] != 0:
-                    msg = f"{display[ -1 ]}\n****"
-                    print(msg)
-                    return display[ -1 ]
-
-        counter += 1
+        a = addReadings(reading)
+        if(a!=0):
+            print("WIN: "+str(a))
+            return a
+        else:
+            print(a)
 
