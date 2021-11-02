@@ -30,7 +30,7 @@ class Server:
                     sock.bind((ip, 0))
                     sock.sendto("ILikeCake".encode(), ("255.255.255.255", 62423))
                     sock.close()
-                    sleep(0.5)
+                    sleep(1)
                 except Exception as e:
                     print(e)
 
