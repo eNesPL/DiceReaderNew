@@ -25,10 +25,10 @@ def returnCameraIndexes():
     return arr
 readings = [0,0,0]
 def allTheSame(items):
-
     if(items.__contains__(0)):
         return False
     return all(x == items[0] for x in items)
+
 def addReadings(value):
     readings.pop()
     readings.insert(0,value)
@@ -36,6 +36,7 @@ def addReadings(value):
         return readings[0]
     else:
         return 0
+
 def readDice():
     print(config.Camera)
     if(config.Camera!="Remote_Camera"):
@@ -44,9 +45,9 @@ def readDice():
         print(config.RemoteCamera)
         return readDiceWithCam(config.RemoteCamera)
 
-def readDiceWithCam2(cam):
-    return 6
 def readDiceWithCam(cam):
+    return 6
+def readDiceWithCam2(cam):
     params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.filterByCircularity = True
@@ -67,11 +68,10 @@ def readDiceWithCam(cam):
         # --
         blobs = detector.detect(im_gray)
         reading = len(blobs)
-        print(f"TEST:{reading}")
-        a = addReadings(reading)
-        if(a!=0):
-            print("WIN: "+str(a))
-            return a
+        answer = addReadings(reading)
+        if(answer!=0 and answer<7):
+            print("WIN: "+str(answer))
+            return answer
         else:
-            print(a)
+            print(answer)
 

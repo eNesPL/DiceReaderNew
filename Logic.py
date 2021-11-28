@@ -69,7 +69,6 @@ class Ui_Logic(QMainWindow):
             if i.text() == config.Camera:
                 i.setChecked(True)
         self.RemoteCameraAddress.setPlainText(config.RemoteCamera)
-        self.ConfirmRollsCheckBox.setCheckState(int(config.ConfirmRoll))
 
     def GetCameraAddress(self):
         return self.RemoteCameraAddress.toPlainText()
@@ -97,6 +96,7 @@ class Ui_Logic(QMainWindow):
         self.ChangeIndex(2)
 
     def StartButtonConfirmClick(self):
+        print("TEST")
         self.server.SendJson("{'Type':'start'}")
 
     def TakeDiceConfirm(self):

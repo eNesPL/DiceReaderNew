@@ -9,7 +9,6 @@ class Config():
     Effects = 0
     Camera = ""
     RemoteCamera = ""
-    ConfirmRoll = False
 
     def ToJson(self):
         Json = '{"Music":"' + str(self.Music) + '","Effects":"' + str(self.Effects) + '"}'
@@ -29,7 +28,6 @@ def GenerateConfig():
     configparser.add_section("Game")
     configparser.set("Camera", "cameraid", str(""))
     configparser.set("Camera", "remotecamera", str(""))
-    configparser.set("Game", 'confirmroll', str(0))
     with open('config.ini', 'w') as configfile:
         configparser.write(configfile)
 
@@ -40,7 +38,6 @@ def SaveConfig():
         if (i.isChecked()):
             configparser.set("Camera", "cameraid", i.text().replace(" ", "_"))
     configparser.set("Camera", "remotecamera", ui.GetCameraAddress())
-    configparser.set("Game", "confirmroll", str(ui.ConfirmRollsCheckBox.checkState()))
     with open('config.ini', 'w') as configfile:
         configparser.write(configfile)
     ui.ChangeIndex(3)

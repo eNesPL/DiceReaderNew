@@ -28,7 +28,7 @@ class Server:
                     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)  # UDP
                     sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
                     sock.bind((ip, 0))
-                    sock.sendto("ILikeCake".encode(), ("255.255.255.255", 62423))
+                    sock.sendto("ILikeCake".encode(), ("255.255.255.255", 2423))
                     sock.close()
                     sleep(1)
                 except Exception as e:
@@ -61,7 +61,7 @@ class Server:
     def Start(self):
         print("Server Started")
         s = socket.socket()
-        port = 62422
+        port = 2422
         s.bind(('', port))
         s.listen(1)
         print("is waiting")
@@ -93,6 +93,7 @@ class Server:
         self.c.send(str(cmd+":"+str(val)).encode())
 
     def SendJson(self,json):
+        print(json)
         self.c.send(str(json).encode())
 
     def HandleData(self,data):

@@ -12,6 +12,7 @@ def allTheSame(items):
 def addReadings(value):
     readings.pop()
     readings.insert(0,value)
+    print(readings)
     if(allTheSame(readings)):
         return readings[0]
     else:
@@ -31,17 +32,32 @@ def readDice():
     while True:
         ret, frame = cap.read()
         # --
+        imS = cv2.resize(frame, (960, 540))
+        cv2.imshow("test", imS)
         frame_blurred = cv2.medianBlur(frame, 9)
+        imS = cv2.resize(frame_blurred, (960, 540))
+        cv2.imshow("test2", imS)
+
         imgray = cv2.cvtColor(frame_blurred, cv2.COLOR_BGR2GRAY)
-        th, im_gray = cv2.threshold(imgray, 128, 192, cv2.THRESH_OTSU)
+        imS = cv2.resize(imgray, (960, 540))
+        cv2.imshow("test3", imS)
+        th, thresh = cv2.threshold(imgray, 70, 255, cv2.THRESH_BINARY)
+        imS = cv2.resize(thresh, (960, 540))
+        cv2.imshow("test4", imS)
+        frame_blurred = cv2.medianBlur(thresh, 9)
+        imS = cv2.resize(frame_blurred, (960, 540))
+        cv2.imshow("test5", imS)
         # --
-        blobs = detector.detect(im_gray)
+        cv2.waitKey(1)
+        blobs = detector.detect(thresh)
         reading = len(blobs)
         print(f"TEST:{reading}")
         a = addReadings(reading)
         if(a!=0):
             print("WIN: "+str(a))
-            return a
+            #return a
         else:
             print(a)
 
+
+readDice()

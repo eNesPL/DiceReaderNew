@@ -1,6 +1,6 @@
 from PyQt5.QtCore import pyqtSlot
 from PyQt5.QtWidgets import QLabel
-
+from Config import config
 import DiceReader
 import DiceReader as dr
 import threading
