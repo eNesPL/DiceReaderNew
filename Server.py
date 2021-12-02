@@ -21,6 +21,7 @@ class Server:
     def Broadcast(self):
         allips = self.getips()
         while not self.connected:
+            self.ui.stackedWidget.setCurrentIndex(0)
             print(self.connected)
             for ip in allips:
                 try:

@@ -123,7 +123,6 @@ class Ui_Logic(QMainWindow):
                     self.PawnButtons[2].setEnabled(True)
                 if pawn=='4':
                     self.PawnButtons[3].setEnabled(True)
-
         except Exception as e:
             print(e)
 
