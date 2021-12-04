@@ -45,9 +45,9 @@ def readDice():
         print(config.RemoteCamera)
         return readDiceWithCam(config.RemoteCamera)
 
-def readDiceWithCam(cam):
-    return 6
 def readDiceWithCam2(cam):
+    return 6
+def readDiceWithCam(cam):
     params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.filterByCircularity = True
