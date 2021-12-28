@@ -25,7 +25,6 @@ def configGetUi(d):
 
 def GenerateConfig():
     configparser.add_section("Camera")
-    configparser.add_section("Game")
     configparser.set("Camera", "cameraid", str(""))
     configparser.set("Camera", "remotecamera", str(""))
     with open('config.ini', 'w') as configfile:
@@ -49,12 +48,10 @@ def LoadConfig():
     configparser.read('config.ini')
     config.Camera = configparser.get("Camera", "cameraid")
     config.RemoteCamera = configparser.get("Camera", "remotecamera")
-    config.ConfirmRoll = configparser.get("Game", "confirmroll")
     ui.LoadConfig(config)
 
 
 def CheckConfig():
-    """ Check if file is empty by confirming if its size is 0 bytes"""
     if (os.path.exists("config.ini")):
         print("FILE IS HERE")
         if (os.stat("config.ini").st_size == 0):

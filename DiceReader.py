@@ -24,6 +24,7 @@ def returnCameraIndexes():
         i -= 1
     return arr
 readings = [0,0,0]
+
 def allTheSame(items):
     if(items.__contains__(0)):
         return False
@@ -45,15 +46,13 @@ def readDice():
         print(config.RemoteCamera)
         return readDiceWithCam(config.RemoteCamera)
 
-def readDiceWithCam2(cam):
-    return 6
 def readDiceWithCam(cam):
+    return 6
+def readDiceWithCam2(cam):
     params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.filterByCircularity = True
     params.filterByInertia = True
-    params.minThreshold = 100
-    params.maxThreshold = 200
     params.minArea = 100
     params.minCircularity = 0.5
     params.minInertiaRatio = 0.5
@@ -67,6 +66,9 @@ def readDiceWithCam(cam):
         th, im_gray = cv2.threshold(imgray, 128, 192, cv2.THRESH_OTSU)
         # --
         blobs = detector.detect(im_gray)
+        blank = np.zeros((1, 1))
+        found = cv2.drawKeypoints(frame, blobs, blank, (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        cv2.imshow('blobs using default parameters', found)
         reading = len(blobs)
         answer = addReadings(reading)
         if(answer!=0 and answer<7):
