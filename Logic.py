@@ -109,7 +109,7 @@ class Ui_Logic(QMainWindow):
         try:
             for button in self.PawnButtons:
                 button.setEnabled(False)
-            print("And hgerer")
+            #print("And hgerer")
             self.ChangeIndex(6)
             spliteddata = data.replace(" ","").replace("MoveQuestion","").split(";")
             spliteddata = list(filter(lambda x: x != "" ,spliteddata))

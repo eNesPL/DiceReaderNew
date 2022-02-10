@@ -41,22 +41,25 @@ def addReadings(value):
 def readDice():
     print(config.Camera)
     if(config.Camera!="Remote_Camera"):
-        return readDiceWithCam(config.Camera)
+        return readDiceWithCam(config.Camera,False)
     else:
         print(config.RemoteCamera)
-        return readDiceWithCam(config.RemoteCamera)
+        return readDiceWithCam(config.RemoteCamera,True)
 
-def readDiceWithCam(cam):
-    return 6
 def readDiceWithCam2(cam):
+    return 6
+def readDiceWithCam(cam,is_ip):
     params = cv2.SimpleBlobDetector_Params()
     params.filterByArea = True
     params.filterByCircularity = True
     params.filterByInertia = True
     params.minArea = 100
-    params.minCircularity = 0.5
-    params.minInertiaRatio = 0.5
-    cap = cv2.VideoCapture(cam)
+    params.minCircularity = 0.7
+    params.minInertiaRatio = 0.7
+    if(not is_ip):
+        cap = cv2.VideoCapture(int(cam))
+    else:
+        cap = cv2.VideoCapture(cam)
     detector = cv2.SimpleBlobDetector_create(params)
     while True:
         ret, frame = cap.read()
@@ -68,12 +71,14 @@ def readDiceWithCam2(cam):
         blobs = detector.detect(im_gray)
         blank = np.zeros((1, 1))
         found = cv2.drawKeypoints(frame, blobs, blank, (0, 0, 255), cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+        found = cv2.resize(found, (960, 540))
         cv2.imshow('blobs using default parameters', found)
+        cv2.waitKey(5)
         reading = len(blobs)
         answer = addReadings(reading)
         if(answer!=0 and answer<7):
             print("WIN: "+str(answer))
+            cv2.waitKey(100)
+            cv2.destroyAllWindows()
             return answer
-        else:
-            print(answer)
 

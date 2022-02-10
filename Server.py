@@ -115,7 +115,7 @@ class Server:
                     self.ui.SetRollDice()
                 else:
                     if ("MoveQuestion" in data.decode("utf-8")):
-                        print("I'tsheere")
+                        #print("I'tsheere")
                         self.ui.GenerateMoveButtons(data.decode("utf-8"))
                     else:
                         if (data == b"MovingPawn"):
